@@ -28,7 +28,7 @@ assistant_instructions = functions.load_assistant_instructions('FeWo Infos.txt')
 # Start conversation thread
 @app.route('/start', methods=['GET'])
 def start_conversation():
-    print("Starting a new conversation...")  # Debugging line
+    print("Konversation wird gestartet.")  # Debugging line
     system_message = {
         "role": "system",
         "content": assistant_instructions
@@ -38,7 +38,7 @@ def start_conversation():
         messages=[system_message]
     )
     thread_id = thread_response['id']
-    print(f"New thread created with ID: {thread_id}")  # Debugging line
+    print(f"Neuner Thread mit ID: {thread_id}")  # Debugging line
     return jsonify({"thread_id": thread_id})
 
 # Generate response
@@ -50,9 +50,9 @@ def chat():
 
     if not thread_id:
         print("Error: Missing thread_id")  # Debugging line
-        return jsonify({"error": "Missing thread_id"}), 400
+        return jsonify({"error": "Thread_ID fehlt"}), 400
 
-    print(f"Received message: {user_input} for thread ID: {thread_id}")  # Debugging line
+    print(f"Erhaltene Nachricht: {user_input} für thread ID: {thread_id}")  # Debugging line
 
     # Retrieve previous messages to maintain context
     messages = [
@@ -68,7 +68,7 @@ def chat():
 
     assistant_response = response['choices'][0]['message']['content']
 
-    print(f"Assistant response: {assistant_response}")  # Debugging line
+    print(f"Assistant Antwort: {assistant_response}")  # Debugging line
     return jsonify({"response": assistant_response})
 
 # Run server

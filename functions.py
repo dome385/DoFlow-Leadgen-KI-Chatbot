@@ -2,6 +2,9 @@ import json
 import os
 import openai
 
+# def add_complaint_to_table(complaint):
+    
+
 def create_assistant(api_key):
     assistant_file_path = 'assistant.json'
 
@@ -37,7 +40,18 @@ def chat_with_assistant(api_key, messages):
 
     response = openai.ChatCompletion.create(
         model="gpt-4o",
-        messages=messages
+        messages=messages,
+        functions=[{
+            "name": "add_complaint_to_table",
+            "description": """Fügt die Beschwerden von Gästen einer Tabelle hinzu.""",
+            "parameters": {
+                "type": "object",
+                "properties": {}
+            }
+            
+            
+        }],
+        function_call = "auto"
     )
 
     return response['choices'][0]['message']['content']
