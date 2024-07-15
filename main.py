@@ -22,6 +22,10 @@ app = Flask(__name__)
 # Init client
 openai.api_key = OPENAI_API_KEY  # should use env variable OPENAI_API_KEY in secrets (bottom left corner)
 
+
+
+assistant_id = functions.create_assistant(openai.api_key)
+
 # Load assistant instructions from file
 assistant_instructions = functions.load_assistant_instructions('FeWo Infos.txt')
 

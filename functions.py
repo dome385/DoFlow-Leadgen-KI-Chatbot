@@ -3,7 +3,7 @@ import os
 import openai
 
 # def add_complaint_to_table(complaint):
-    
+
 
 def create_assistant(api_key):
     assistant_file_path = 'assistant.json'
@@ -15,10 +15,8 @@ def create_assistant(api_key):
             print("Loaded existing assistant ID.")
     else:
         # Upload the file containing information about the vacation rental
-        file_response = openai.File.create(
-            file=open("FeWo Infos.txt", "rb"),
-            purpose='fine-tune'
-        )
+        file_response = openai.File.create(file=open("Autom.txt", "rb"),
+                                           purpose='fine-tune')
         file_id = file_response['id']
 
         # Save the file ID and use it in chat completions
@@ -30,10 +28,12 @@ def create_assistant(api_key):
 
     return assistant_id
 
+
 def load_assistant_instructions(file_path):
     with open(file_path, 'r') as file:
         instructions = file.read()
     return instructions
+
 
 def chat_with_assistant(api_key, messages):
     openai.api_key = api_key
@@ -43,15 +43,13 @@ def chat_with_assistant(api_key, messages):
         messages=messages,
         functions=[{
             "name": "add_complaint_to_table",
-            "description": """Fügt die Beschwerden von Gästen einer Tabelle hinzu.""",
+            "description":
+            """Fügt die Kontaktdaten eines potenziellen Kunden in die Airtable Tabelle hinzu""",
             "parameters": {
                 "type": "object",
                 "properties": {}
             }
-            
-            
         }],
-        function_call = "auto"
-    )
+        function_call="auto")
 
     return response['choices'][0]['message']['content']
